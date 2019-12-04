@@ -18,9 +18,17 @@ RSpec.describe QuestionsController, type: :controller do
   end
 
   describe 'POST #create' do
+    let(:create_valid_question) do
+      post :create, params: { question: attributes_for(:question) }
+    end
+
+    let(:create_invalid_question) do
+      post :create, params: { question: attributes_for(:question, :invalid) }
+    end
+
     context 'with valid attributes' do
       it 'save a new question in the db' do
-        expect { post :create, params: { question: attributes_for(:question) } }.to change(Question, :count).by(1)
+        expect { create_valid_question }.to change(Question, :count).by(1)
       end
 
       it 'redirect to show' do
@@ -31,7 +39,7 @@ RSpec.describe QuestionsController, type: :controller do
 
     context 'with invalid attributes' do
       it 'does not save the question' do
-        expect { post :create, params: { question: attributes_for(:question, :invalid) } }.to_not change(Question, :count)
+        expect { :create_invalid_question }.to_not change(Question, :count)
       end
 
       it 're-rander new view' do
