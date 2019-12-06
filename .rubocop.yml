@@ -2,6 +2,7 @@ AllCops:
   Exclude:
     - config/initializers/secret_token.rb
     - bin/*
+    - node_modules/node-sass/src/libsass/contrib/libsass.spec
 
 Rails:
   Enabled: true
@@ -10,12 +11,21 @@ Style/FrozenStringLiteralComment:
   Enabled: false
 
 Metrics/LineLength:
-  Max: 125
+  Max: 170
 
 Style/Documentation:
   Enabled: false
 
+Style/StringLiterals:
+  Enabled: false  
+
+Style/GlobalVars:
+  Enabled: false
+
 Metrics/MethodLength:
   Max: 30
+
 Metrics/BlockLength:
-  Max: 90  
+  Max: 120  
+Naming/PredicateName:
+  Enabled: false

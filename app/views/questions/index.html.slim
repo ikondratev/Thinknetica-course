@@ -1,0 +1,19 @@
+p= link_to 'Ask question', new_question_path
+
+h1 List of questions
+table
+  thead
+    tr
+      th Title
+      th Body
+      th Answers
+    tbody
+    - if @questions.any?
+      - @questions.each do |question|
+        tr
+          td= link_to question.title, question_path(question)
+          td= link_to question.body, question_path(question)
+          td= question.answers.count     
+    - else
+       tr
+         td No question yeat          
