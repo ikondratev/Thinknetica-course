@@ -1,0 +1,21 @@
+doctype html
+html
+  head
+    title First Project Simple
+
+    = csrf_meta_tags
+    = stylesheet_link_tag    'application', media: 'all'
+    /, 'data-turbolinks-track': 'reload' 
+
+  body
+    p.notice = notice 
+    p.alert = alert
+    p
+      -if user_signed_in?
+        = link_to "Log out (#{current_user.email})", destroy_user_session_path, method: :delete
+      -else 
+        = link_to "Sign up", new_user_registration_path
+        = link_to "Login", new_user_session_path
+      = link_to 'Questions', questions_path
+
+    = yield

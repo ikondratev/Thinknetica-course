@@ -1,0 +1,11 @@
+#question.card
+  .card-body
+    h1.card-title = question.title
+    p.body = question.body
+
+    = link_to 'Delete question', question_path(question), method: :delete if current_user&.is_author_of?(question)
+
+.card
+  h2.card-header Answers
+  .answers.card-body = render question.answers
+  = render 'answers/answer_form', answer: @answer, queston: question
