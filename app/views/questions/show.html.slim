@@ -1,11 +1,18 @@
+ 
 #question.card
-  .card-body
-    h1.card-title = question.title
+  .card-header
+    h1 
+      | Question author: #{question.user.email}
+  .card-body    
+
+    h2.card-title = question.title
     p.body = question.body
 
-    = link_to 'Delete question', question_path(question), method: :delete if current_user&.is_author_of?(question)
+    p
+      = link_to 'Delete question', question_path(question), method: :delete if current_user&.is_author_of?(question)
 
 .card
-  h2.card-header Answers
+  h1.card-header Answers
   .answers.card-body = render question.answers
-  = render 'answers/answer_form', answer: @answer, queston: question
+
+= render 'answers/answer_form', answer: @answer, queston: question

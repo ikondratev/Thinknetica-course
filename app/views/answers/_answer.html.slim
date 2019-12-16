@@ -1,6 +1,10 @@
 - if answer.persisted?
+  hr
   .answer(id="answer-#{answer.id}")
+    p 
+      ' Author:
+      = answer.user.email
     p.answer-body = answer.body
- 	
- 	- if current_user&.is_author_of?(answer)
+
+    - if current_user&.is_author_of?(answer)
       = link_to 'Delete answer', answer, method: :delete
