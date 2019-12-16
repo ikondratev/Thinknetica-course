@@ -7,29 +7,25 @@ class AnswersController < ApplicationController
   def create
     @answer = question.answers.new(answer_params)
     @answer.user = current_user
-    if @answer.save
-      redirect_to question, notice: 'Your answer have been successfully added.'
-    else
-      render 'questions/show'
-    end
+    @answer.save
   end
 
   def update
-    if answer.update(answer_params)
-      redirect_to question, notice: 'Your answer have been successfully updated.'
-    else
-      render 'questions/show'
-    end
+    flash.now[:notice] = "Your answer have been successfully updated" if current_user.is_author_of?(answer) && answer.update(answer_params)
   end
 
   def destroy
     if current_user.is_author_of?(answer)
       answer.destroy
-      flash[:notice] = 'Your answer have been successfully destroyed.'
-    else
-      flash[:notice] = 'No access to delete.'
+      flash.now[:notice] = 'Your answer have been successfully destroyed.'
     end
-    redirect_to question
+  end
+
+  def set_the_best
+    if current_user.is_author_of?(question)
+      answer.set_the_best
+      @answers = answer.question.answers.reload
+    end
   end
 
   private

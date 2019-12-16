@@ -75,21 +75,21 @@ RSpec.describe QuestionsController, type: :controller do
 
     context 'with invalid attributes' do
       it 'does not save the question' do
-        expect { post :create, params: { question: attributes_for(:question, :invalid) } }.to_not change(Question, :count)
+        expect { post :create, params: { question: attributes_for(:question, :invalid) }, format: :js }.to_not change(Question, :count)
       end
 
-      it 're-renders new view' do
-        post :create, params: { question: attributes_for(:question, :invalid) }
-        expect(response).to render_template :new
+      it 're-renders create' do
+        post :create, params: { question: attributes_for(:question, :invalid), format: :js }
+        expect(response).to render_template :create
       end
     end
   end
 
   describe 'PATCH #update' do
-    before { login(user) }
+    before { login(question.user) }
 
     let(:update_question) do
-      patch :update, params: { id: question, question: { title: 'new title', body: 'new body' } }
+      patch :update, params: { id: question, question: { title: 'new title', body: 'new body' }, format: :js }
     end
 
     context 'with valid attributes' do
@@ -106,16 +106,17 @@ RSpec.describe QuestionsController, type: :controller do
       end
 
       it 'redirects to updated question' do
-        expect(response).to redirect_to question
+        expect(response).to render_template :update
       end
     end
 
     context 'with invalid attributes' do
-      before { patch :update, params: { id: question, question: attributes_for(:question, :invalid) } }
+      before { patch :update, params: { id: question, question: attributes_for(:question, :invalid) }, format: :js }
 
       it 'does not change title of question' do
         question.reload
-        expect(question.title).to eq question.title
+
+        expect(question.body).to eq question.body
       end
 
       it 'does not change body of question' do
@@ -124,7 +125,7 @@ RSpec.describe QuestionsController, type: :controller do
       end
 
       it 're-renders edit view' do
-        expect(response).to render_template :edit
+        expect(response).to render_template :update
       end
     end
   end

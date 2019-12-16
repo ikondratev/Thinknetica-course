@@ -7,11 +7,11 @@ RSpec.describe AnswersController, type: :controller do
 
   describe 'POST #create' do
     let(:valid_create_answer) do
-      post :create, params: { question_id: question, answer: attributes_for(:answer) }
+      post :create, params: { question_id: question, answer: attributes_for(:answer) }, format: :js
     end
 
     let(:invalid_create_answer) do
-      post :create, params: { question_id: question, answer: attributes_for(:answer, :invalid) }
+      post :create, params: { question_id: question, answer: attributes_for(:answer, :invalid) }, format: :js
     end
 
     before { login(user) }
@@ -23,7 +23,7 @@ RSpec.describe AnswersController, type: :controller do
 
       it 'redirects to associated question' do
         valid_create_answer
-        expect(response).to redirect_to question
+        expect(response).to render_template :create
       end
 
       it 'associated answer with current user' do
@@ -37,9 +37,45 @@ RSpec.describe AnswersController, type: :controller do
         expect { invalid_create_answer }.to_not change(Answer, :count)
       end
 
-      it 're randers new view' do
+      it 're randers create view' do
         invalid_create_answer
-        expect(response).to render_template 'questions/show'
+        expect(response).to render_template :create
+      end
+    end
+  end
+
+  describe 'PATCH #update' do
+    let!(:answer) { create(:answer, question: question) }
+
+    context 'with valid attributes' do
+      before do
+        sign_in(answer.user)
+        patch :update, params: { id: answer, answer: { body: 'My updated body' }, format: :js }
+      end
+
+      it 'changes answers body' do
+        answer.reload
+        expect(answer.body).to eq 'My updated body'
+      end
+
+      it 'rendered update view' do
+        expect(response).to render_template :update
+      end
+    end
+
+    context 'with invalid attributes' do
+      before do
+        sign_in(answer.user)
+        patch :update, params: { id: answer, question_id: question, answer: attributes_for(:answer, :invalid), format: :js }
+      end
+
+      it 'not changes answers body' do
+        answer.reload
+        expect(answer.body).to eq answer.body
+      end
+
+      it 'rendered update view' do
+        expect(response).to render_template :update
       end
     end
   end
@@ -47,7 +83,7 @@ RSpec.describe AnswersController, type: :controller do
   describe 'DELETE #destroy' do
     before { answer }
 
-    let(:delete_answer) { delete :destroy, params: { question_id: answer.question.id, id: answer } }
+    let(:delete_answer) { delete :destroy, params: { question_id: answer.question.id, id: answer }, format: :js }
 
     context 'if it is an author of answer' do
       before { login answer.user }
@@ -58,7 +94,7 @@ RSpec.describe AnswersController, type: :controller do
 
       it 're-directs to question' do
         delete_answer
-        expect(response).to redirect_to answer.question
+        expect(response).to render_template :destroy
       end
     end
 
@@ -71,7 +107,37 @@ RSpec.describe AnswersController, type: :controller do
 
       it 're-directs to question' do
         delete_answer
-        expect(response).to redirect_to answer.question
+        expect(response).to render_template :destroy
+      end
+    end
+  end
+
+  describe 'PATCH #set_the_best' do
+    let!(:question_with_answer) { create(:question, :with_answer) }
+    let(:best_answer) { question_with_answer.answers[1] }
+
+    context 'user as an author sets the best answer' do
+      before do
+        sign_in(question_with_answer.user)
+        patch :set_the_best, params: { id: best_answer }, format: :js
+      end
+
+      it 'set the best attributes to answer' do
+        expect(assigns(:answer).the_best).to eq(true)
+      end
+
+      it 'render templete' do
+        expect(response).to render_template :set_the_best
+      end
+    end
+
+    context 'user as not an author tries to select set answer' do
+      it 'does not set the best answer' do
+        sign_in(user)
+
+        patch :set_the_best, params: { id: best_answer }, format: :js
+
+        expect(assigns(:answer).the_best).to_not eq(true)
       end
     end
   end

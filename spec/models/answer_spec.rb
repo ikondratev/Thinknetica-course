@@ -5,4 +5,29 @@ RSpec.describe Answer, type: :model do
   it { should belong_to(:user) }
 
   it { should validate_presence_of :body }
+
+  describe 'set the best answer' do
+    let(:question) { create(:question, :with_answer) }
+    let(:answer) { question.answers[0] }
+    let(:other_answer) { question.answers[1] }
+
+    context 'set the best answer' do
+      before { answer.set_the_best }
+
+      it { expect(answer).to be_the_best }
+      it { expect(other_answer).to_not be_the_best }
+    end
+
+    context 'set oter answer as the best' do
+      before do
+        answer.set_the_best
+        other_answer.set_the_best
+        answer.reload
+        other_answer.reload
+      end
+
+      it { expect(answer).to_not be_the_best }
+      it { expect(other_answer).to be_the_best }
+    end
+  end
 end

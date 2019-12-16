@@ -7,7 +7,7 @@ feature 'User can delete answer', "
   given(:answer) { create(:answer) }
   given(:user) { create(:user) }
 
-  scenario 'only authenticated author of answer can delete answer' do
+  scenario 'only authenticated author of answer can delete answer', js: true do
     sign_in(answer.user)
     visit question_path(answer.question)
     click_on 'Delete answer'
