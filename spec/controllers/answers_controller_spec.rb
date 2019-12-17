@@ -11,7 +11,7 @@ RSpec.describe AnswersController, type: :controller do
     end
 
     let(:invalid_create_answer) do
-      post :create, params: { question_id: question, answer: attributes_for(:answer, :invalid) }
+      post :create, params: { question_id: question, answer: attributes_for(:answer, :invalid) }, format: :js
     end
 
     before { login(user) }
@@ -39,7 +39,7 @@ RSpec.describe AnswersController, type: :controller do
 
       it 're randers new view' do
         invalid_create_answer
-        expect(response).to render_template 'questions/show'
+        expect(response).to render_template :create
       end
     end
   end

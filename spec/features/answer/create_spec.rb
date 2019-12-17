@@ -8,7 +8,7 @@ feature 'User can creates answer', "
     given(:user) { create(:user) }
     given(:question) { create(:question) }
 
-    scenario 'authenticated user can creates answer on current page' do
+    scenario 'authenticated user can creates answer on current page', js: true do
       sign_in(user)
       visit question_path(question)
 
@@ -21,7 +21,7 @@ feature 'User can creates answer', "
       end
     end
 
-    scenario 'authenticated user tries create invalid answer' do
+    scenario 'authenticated user tries create invalid answer', js: true do
       sign_in(question.user)
       visit question_path(question)
 
@@ -31,7 +31,7 @@ feature 'User can creates answer', "
       expect(page).to have_content 'Body is too short'
     end
 
-    scenario 'unauthenticated user tries create answer on current page' do
+    scenario 'unauthenticated user tries create answer on current page', js: true do
       visit question_path(question)
 
       fill_in 'answer[body]', with: 'New answer'

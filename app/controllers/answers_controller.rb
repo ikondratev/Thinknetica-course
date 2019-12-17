@@ -7,11 +7,7 @@ class AnswersController < ApplicationController
   def create
     @answer = question.answers.new(answer_params)
     @answer.user = current_user
-    if @answer.save
-      redirect_to question, notice: 'Your answer have been successfully added.'
-    else
-      render 'questions/show'
-    end
+    redirect_to question, notice: 'Your answer have been successfully added.' if @answer.save
   end
 
   def update
