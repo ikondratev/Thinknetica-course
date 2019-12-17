@@ -3,7 +3,7 @@
 .card
   h3.card-header Create answer
   .card-body
-    = form_with model: [question, answer] do |f|
+    = form_with model: [question, answer], class: 'new-answer' do |f|
       p
         = f.label :body, 'Answer:'
         = f.text_area :body

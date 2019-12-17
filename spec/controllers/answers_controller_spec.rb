@@ -7,7 +7,7 @@ RSpec.describe AnswersController, type: :controller do
 
   describe 'POST #create' do
     let(:valid_create_answer) do
-      post :create, params: { question_id: question, answer: attributes_for(:answer) }
+      post :create, params: { question_id: question, answer: attributes_for(:answer) }, format: :js
     end
 
     let(:invalid_create_answer) do
@@ -23,7 +23,7 @@ RSpec.describe AnswersController, type: :controller do
 
       it 'redirects to associated question' do
         valid_create_answer
-        expect(response).to redirect_to question
+        expect(response).to render_template :create
       end
 
       it 'associated answer with current user' do
