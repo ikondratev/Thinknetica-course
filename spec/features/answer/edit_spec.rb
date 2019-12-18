@@ -8,6 +8,7 @@ feature 'User can edit own answer', "
   given!(:user) { create(:user) }
   given!(:question) { create(:question) }
   given!(:answer) { create(:answer, question: question, user: user) }
+  given(:other_user) { create(:user) }
 
   scenario 'Unautheticated user can not edit answer' do
     visit question_path(question)
@@ -32,9 +33,26 @@ feature 'User can edit own answer', "
     end
 
     scenario 'edits own answer with error' do
+      sign_in(user)
+      visit question_path(question)
+
+      click_on 'edit'
+
+      within '.answers' do
+        fill_in 'answer[body]', with: 'new'
+        click_on 'save'
+        expect(page).to have_content(answer.body)
+      end
+      expect(page).to have_content 'Body is too short (minimum is 5 characters)'
     end
 
-    scenario "tries edit other's user answer" do
+    scenario "user can not see edit if it is not his answer" do
+      sign_in(other_user)
+      visit question_path(question)
+
+      within '.answers' do
+        expect(page).to_not have_link 'edit'
+      end
     end
   end
 end
