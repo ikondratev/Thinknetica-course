@@ -18,10 +18,7 @@ class AnswersController < ApplicationController
     if current_user.is_author_of?(answer)
       answer.destroy
       flash[:notice] = 'Your answer have been successfully destroyed.'
-    else
-      flash[:notice] = 'No access to delete.'
     end
-    redirect_to question
   end
 
   private
