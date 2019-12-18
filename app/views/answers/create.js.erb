@@ -1,4 +1,5 @@
-$('.answer-errors').html('<%=  render 'shared/errors', resource: answer %>');
+$('.answer-errors').html('<%= j  render 'shared/errors', resource: answer %>');
+$('.notice').html('<%= flash[:notice] %>');
 <% if @answer.persisted? %>
   $('.answers').append('<%= j render @answer%>');
   $('.new-answer textarea').val('');

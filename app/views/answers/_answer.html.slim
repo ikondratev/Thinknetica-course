@@ -1,10 +1,18 @@
 - if answer.persisted?
-  hr
   .answer(id="answer-#{answer.id}")
+    hr
     p 
       ' Author:
       = answer.user.email
+    p(class="answer-error-#{answer.id}")  
     p.answer-body = answer.body
 
     - if current_user&.is_author_of?(answer)
-      = link_to 'Delete answer', answer, method: :delete
+      p = link_to 'Delete answer', answer, method: :delete
+      p = link_to 'edit', '#', class: 'edit-answer-link', data: { answer_id: answer.id }
+
+    = form_with model: answer, class: 'hidden', html: { id: "edit-answer-#{answer.id}" } do |f|
+      p
+        = f.label :body, 'Answer: '
+        = f.text_area :body
+      = f.submit 'save'  

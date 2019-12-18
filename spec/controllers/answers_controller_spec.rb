@@ -37,9 +37,45 @@ RSpec.describe AnswersController, type: :controller do
         expect { invalid_create_answer }.to_not change(Answer, :count)
       end
 
-      it 're randers new view' do
+      it 're randers create view' do
         invalid_create_answer
         expect(response).to render_template :create
+      end
+    end
+  end
+
+  describe 'PATCH #update' do
+    let!(:answer) { create(:answer, question: question) }
+
+    context 'with valid attributes' do
+      before do
+        sign_in(answer.user)
+        patch :update, params: { id: answer, answer: { body: 'My updated body' }, format: :js }
+      end
+
+      it 'changes answers body' do
+        answer.reload
+        expect(answer.body).to eq 'My updated body'
+      end
+
+      it 'rendered update view' do
+        expect(response).to render_template :update
+      end
+    end
+
+    context 'with invalid attributes' do
+      before do
+        sign_in(answer.user)
+        patch :update, params: { id: answer, question_id: question, answer: attributes_for(:answer, :invalid), format: :js }
+      end
+
+      it 'not changes answers body' do
+        answer.reload
+        expect(answer.body).to eq answer.body
+      end
+
+      it 'rendered update view' do
+        expect(response).to render_template :update
       end
     end
   end

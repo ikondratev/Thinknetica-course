@@ -11,11 +11,7 @@ class AnswersController < ApplicationController
   end
 
   def update
-    if answer.update(answer_params)
-      redirect_to question, notice: 'Your answer have been successfully updated.'
-    else
-      render 'questions/show'
-    end
+    flash.now[:notice] = "Your answer have been successfully updated" if current_user.is_author_of?(answer) && answer.update(answer_params)
   end
 
   def destroy
