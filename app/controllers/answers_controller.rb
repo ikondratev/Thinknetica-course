@@ -17,7 +17,7 @@ class AnswersController < ApplicationController
   def destroy
     if current_user.is_author_of?(answer)
       answer.destroy
-      flash[:notice] = 'Your answer have been successfully destroyed.'
+      flash.now[:notice] = 'Your answer have been successfully destroyed.'
     end
   end
 

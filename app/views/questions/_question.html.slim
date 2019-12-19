@@ -1,8 +1,4 @@
- 
-#question.card
-  .card-header
-  .card-body
-  .question(id="question-#{question.id}")   
+.question(id="question-#{question.id}")   
 
     h1 
     | Question author: #{question.user.email}
@@ -20,9 +16,3 @@
         = f.label :body, 'Question: '
         = f.text_area :body
       = f.submit 'save'  
-        
-.card
-  h1.card-header Answers
-  .answers.card-body = render question.answers
-
-= render 'answers/answer_form', answer: @answer, queston: question

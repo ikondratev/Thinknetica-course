@@ -22,11 +22,7 @@ class QuestionsController < ApplicationController
   end
 
   def update
-    if question.update(question_params)
-      redirect_to question, notice: 'Your question successfully updated.'
-    else
-      render :edit
-    end
+    flash.now[:notice] = "Your question have been successfully updated" if current_user.is_author_of?(question) && question.update(question_params)
   end
 
   def destroy
