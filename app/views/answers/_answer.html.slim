@@ -4,8 +4,12 @@
     p 
       ' Author:
       = answer.user.email
+    p = 'The best' if answer.the_best?  
     p(class="answer-error-#{answer.id}")  
     p.answer-body = answer.body
+
+    - if current_user&.is_author_of?(question) && !answer.the_best?
+      p = link_to 'best', set_the_best_answer_path(answer), method: :patch, remote: true
 
     - if current_user&.is_author_of?(answer)
       p = link_to 'Delete answer', answer, method: :delete, remote: true

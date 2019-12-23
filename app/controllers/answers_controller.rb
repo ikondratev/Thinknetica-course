@@ -21,6 +21,13 @@ class AnswersController < ApplicationController
     end
   end
 
+  def set_the_best
+    if current_user.is_author_of?(question)
+      answer.set_the_best
+      @answers = answer.question.answers.reload
+    end
+  end
+
   private
 
   def answer

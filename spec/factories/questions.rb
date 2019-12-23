@@ -9,13 +9,12 @@ FactoryBot.define do
     body { 'MyText' }
 
     trait :invalid do
-      title { nil }
       body { nil }
     end
 
     trait :with_answer do
       after(:create) do |q|
-        create_list(:answer, 1, question: q)
+        create_list(:answer, 7, question: q)
       end
     end
   end

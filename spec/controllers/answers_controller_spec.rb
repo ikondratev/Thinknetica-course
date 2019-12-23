@@ -111,4 +111,34 @@ RSpec.describe AnswersController, type: :controller do
       end
     end
   end
+
+  describe 'PATCH #set_the_best' do
+    let!(:question_with_answer) { create(:question, :with_answer) }
+    let(:best_answer) { question_with_answer.answers[1] }
+
+    context 'user as an author sets the best answer' do
+      before do
+        sign_in(question_with_answer.user)
+        patch :set_the_best, params: { id: best_answer }, format: :js
+      end
+
+      it 'set the best attributes to answer' do
+        expect(assigns(:answer).the_best).to eq(true)
+      end
+
+      it 'render templete' do
+        expect(response).to render_template :set_the_best
+      end
+    end
+
+    context 'user as not an author tries to select set answer' do
+      it 'does not set the best answer' do
+        sign_in(user)
+
+        patch :set_the_best, params: { id: best_answer }, format: :js
+
+        expect(assigns(:answer).the_best).to_not eq(true)
+      end
+    end
+  end
 end

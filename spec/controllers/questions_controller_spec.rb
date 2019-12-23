@@ -115,7 +115,8 @@ RSpec.describe QuestionsController, type: :controller do
 
       it 'does not change title of question' do
         question.reload
-        expect(question.title).to eq question.title
+
+        expect(question.body).to eq question.body
       end
 
       it 'does not change body of question' do
