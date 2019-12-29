@@ -11,6 +11,9 @@
     p(class="question-error-#{question.id}")
     p.body = question.body
 
+    - if @question.file.attached?
+      p= link_to @question.file.filename.to_s, url_for(@question.file)
+
     - if current_user&.is_author_of?(question)
       p = link_to 'Delete question', question_path(question), method: :delete, remote: true
       p = link_to 'edit', '#', class: 'edit-question-link', data: { question_id: question.id }

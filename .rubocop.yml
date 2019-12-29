@@ -33,3 +33,6 @@ Naming/PredicateName:
 
 Style/GuardClause:
   Enabled: false  
+  
+Metrics/AbcSize:
+  Enabled: false  
