@@ -9,7 +9,7 @@
     = f.label :body
     = f.text_area :body
   p
-    = f.label :file
-    = f.file_field :file
+    = f.label :files
+    = f.file_field :files, multiple:true
 
   = f.submit 'Ask'
