@@ -53,5 +53,20 @@ feature 'User can edit own question', "
         expect(page).to_not have_link 'edit'
       end
     end
+
+    scenario 'edit a question with attached files' do
+      sign_in(user)
+      visit question_path(question)
+
+      click_on 'edit'
+
+      within '.question' do
+        attach_file 'File', ["#{Rails.root}/spec/rails_helper.rb", "#{Rails.root}/spec/spec_helper.rb"]
+        click_on 'save'
+
+        expect(page).to have_link 'rails_helper.rb'
+        expect(page).to have_link 'spec_helper.rb'
+      end
+    end
   end
 end

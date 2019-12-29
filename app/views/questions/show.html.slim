@@ -11,6 +11,13 @@
     p(class="question-error-#{question.id}")
     p.body = question.body
 
+    - if @question.files.attached?
+      - @question.files.each do |file|
+        p
+          = link_to file.filename.to_s, url_for(file)
+          - if current_user&.is_author_of?(question) 
+            = link_to 'delete file',  attachment_path(file), method: :delete
+
     - if current_user&.is_author_of?(question)
       p = link_to 'Delete question', question_path(question), method: :delete, remote: true
       p = link_to 'edit', '#', class: 'edit-question-link', data: { question_id: question.id }
@@ -19,6 +26,9 @@
       p
         = f.label :body, 'Question: '
         = f.text_area :body
+      p
+        = f.label :files
+        = f.file_field :files, multiple:true, direct_upload: true             
       = f.submit 'save'  
         
 .card

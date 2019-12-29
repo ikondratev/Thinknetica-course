@@ -37,10 +37,10 @@ class QuestionsController < ApplicationController
   private
 
   def question
-    @question ||= params[:id] ? Question.find(params[:id]) : current_user.questions.new
+    @question ||= params[:id] ? Question.with_attached_files.find(params[:id]) : current_user.questions.new
   end
 
   def question_params
-    params.require(:question).permit(:title, :body)
+    params.require(:question).permit(:title, :body, files: [])
   end
 end

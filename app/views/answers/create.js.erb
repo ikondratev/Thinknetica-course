@@ -3,4 +3,5 @@ $('.notice').html('<%= flash[:notice] %>');
 <% if @answer.persisted? %>
   $('.answers').append('<%= j render @answer%>');
   $('.new-answer textarea').val('');
+  $('.new-answer directupload').val('false');
 <% end %>
