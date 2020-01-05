@@ -8,30 +8,41 @@ feature 'User can creates answer', "
     given(:user) { create(:user) }
     given(:question) { create(:question) }
 
-    scenario 'authenticated user can creates answer on current page', js: true do
-      sign_in(user)
-      visit question_path(question)
+    describe 'Authenticated user', js: true do
+      background do
+        sign_in(user)
+        visit question_path(question)
+      end
 
-      fill_in 'answer[body]', with: 'New answer'
-      click_on 'Add'
+      scenario 'can creates answer on current page' do
+        fill_in 'answer[body]', with: 'New answer'
+        click_on 'Add'
 
-      expect(current_path).to eq question_path(question)
-      within '.answers' do
-        expect(page).to have_content 'New answer'
+        expect(current_path).to eq question_path(question)
+        within '.answers' do
+          expect(page).to have_content 'New answer'
+        end
+      end
+
+      scenario 'tries create invalid answer' do
+        fill_in 'answer[body]', with: 'qwe'
+        click_on 'Add'
+
+        expect(page).to have_content 'Body is too short'
+      end
+
+      scenario 'can creates an answer with attached files' do
+        fill_in 'answer[body]', with: 'New answer'
+
+        attach_file 'File', ["#{Rails.root}/spec/rails_helper.rb", "#{Rails.root}/spec/spec_helper.rb"]
+        click_on 'Add'
+
+        expect(page).to have_link 'rails_helper.rb'
+        expect(page).to have_link 'spec_helper.rb'
       end
     end
 
-    scenario 'authenticated user tries create invalid answer', js: true do
-      sign_in(question.user)
-      visit question_path(question)
-
-      fill_in 'answer[body]', with: 'qwe'
-      click_on 'Add'
-
-      expect(page).to have_content 'Body is too short'
-    end
-
-    scenario 'unauthenticated user tries create answer on current page', js: true do
+    scenario 'Unauthenticated user tries create answer on current page', js: true do
       visit question_path(question)
 
       fill_in 'answer[body]', with: 'New answer'

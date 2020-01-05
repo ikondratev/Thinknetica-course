@@ -2,6 +2,8 @@ class Answer < ApplicationRecord
   belongs_to :question
   belongs_to :user
 
+  has_many_attached :files
+
   scope :order_by_the_best, -> { order the_best: :desc }
 
   validates :body, presence: true, length: { minimum: 5 }

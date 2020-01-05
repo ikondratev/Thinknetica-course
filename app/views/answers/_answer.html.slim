@@ -11,6 +11,10 @@
     - if current_user&.is_author_of?(question) && !answer.the_best?
       p = link_to 'best', set_the_best_answer_path(answer), method: :patch, remote: true
 
+    - if @answer.files.attached?
+      - @answer.files.each do |file|
+        p= link_to file.filename.to_s, url_for(file)  
+
     - if current_user&.is_author_of?(answer)
       p = link_to 'Delete answer', answer, method: :delete, remote: true
       p = link_to 'edit', '#', class: 'edit-answer-link', data: { answer_id: answer.id }
