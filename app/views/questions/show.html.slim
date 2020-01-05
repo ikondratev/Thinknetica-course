@@ -23,6 +23,9 @@
       p
         = f.label :body, 'Question: '
         = f.text_area :body
+      p
+        = f.label :files
+        = f.file_field :files, multiple:true         
       = f.submit 'save'  
         
 .card
