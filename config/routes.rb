@@ -7,6 +7,7 @@ Rails.application.routes.draw do
     delete :delete_files, on: :member
     resources :answers, only: %i[create update destroy], shallow: true do
       patch 'set_the_best', on: :member
+      delete 'delete_files', on: :member
     end
   end
 end
