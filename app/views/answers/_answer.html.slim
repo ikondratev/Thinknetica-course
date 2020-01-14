@@ -16,7 +16,7 @@
         p
           = link_to file.filename.to_s, url_for(file)
           - if current_user&.is_author_of?(answer) 
-            = link_to 'delete file',  delete_files_answer_path(file), method: :delete          
+            = link_to 'delete file',  delete_files_attachment_path(file), method: :delete          
 
     - if current_user&.is_author_of?(answer)
       p = link_to 'Delete answer', answer, method: :delete, remote: true
@@ -28,5 +28,5 @@
         = f.text_area :body
       p
         = f.label :files
-        = f.file_field :files, multiple:true        
+        = f.file_field :files, multiple:true, direct_upload: true       
       = f.submit 'save'  
