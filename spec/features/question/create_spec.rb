@@ -42,17 +42,17 @@ feature 'User can create question', "
       expect(page).to have_link 'spec_helper.rb'
     end
 
-      scenario 'delete attached files' do
-        fill_in 'question[title]', with: 'New test title'
-        fill_in 'question[body]', with: 'New test body text'
+    scenario 'delete attached files' do
+      fill_in 'question[title]', with: 'New test title'
+      fill_in 'question[body]', with: 'New test body text'
 
-        attach_file 'File', ["#{Rails.root}/spec/rails_helper.rb"]
-        click_on 'Ask'
+      attach_file 'File', ["#{Rails.root}/spec/rails_helper.rb"]
+      click_on 'Ask'
 
-        click_on 'delete file'
+      click_on 'delete file'
 
-        expect(page).not_to have_link 'spec_helper.rb'
-      end  
+      expect(page).not_to have_link 'spec_helper.rb'
+    end
   end
 
   scenario 'Unauthenticated user tries to ask a question' do
