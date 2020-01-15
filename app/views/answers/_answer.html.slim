@@ -16,7 +16,7 @@
         p
           = link_to file.filename.to_s, url_for(file)
           - if current_user&.is_author_of?(answer) 
-            = link_to 'delete file',  delete_files_attachment_path(file), method: :delete          
+            = link_to 'delete file',  attachment_path(file), method: :delete          
 
     - if current_user&.is_author_of?(answer)
       p = link_to 'Delete answer', answer, method: :delete, remote: true
