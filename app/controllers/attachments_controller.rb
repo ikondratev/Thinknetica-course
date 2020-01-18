@@ -1,7 +1,7 @@
 class AttachmentsController < ApplicationController
   def destroy
     file = ActiveStorage::Attachment.find(params[:id])
-    if current_user == file.record.user
+    if current_user.is_author_of?(file.record)
       file.purge
       redirect_back(fallback_location: question_path)
     end
