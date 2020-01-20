@@ -42,6 +42,18 @@ feature 'User can create question', "
       expect(page).to have_link 'spec_helper.rb'
     end
 
+    scenario 'asks a question and create gift' do
+      fill_in 'question[title]', with: 'New test title'
+      fill_in 'question[body]', with: 'New test body text'
+
+      fill_in 'Gift name', with: 'Gift name'
+      attach_file 'Image', "#{Rails.root}/spec/images/gift.jpg"
+      click_on 'Ask'
+
+      expect(page).to have_content 'Gift name'
+      expect(page).to have_css("img[src*='gift.jpg']")
+    end
+
     scenario 'delete attached files' do
       fill_in 'question[title]', with: 'New test title'
       fill_in 'question[body]', with: 'New test body text'

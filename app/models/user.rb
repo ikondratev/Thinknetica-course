@@ -6,6 +6,7 @@ class User < ApplicationRecord
 
   has_many :answers
   has_many :questions
+  has_many :gifts
 
   validates :email, :password, presence: true
 

@@ -7,7 +7,15 @@
       p
         = f.label :body, 'Answer:'
         = f.text_area :body
+     
+      p Files:
       p
         = f.label :files
-        = f.file_field :files, multiple:true, direct_upload: true  
+        = f.file_field :files, multiple:true, direct_upload: true
+
+      #answer_links
+        = f.fields_for :links do |l|   
+        .links
+          = link_to_add_association 'Add link', f, :links, partial: 'links/link_fields'  
+               
       = f.submit 'Add', class: 'btn btn-primary'

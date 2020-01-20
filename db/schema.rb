@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20_191_229_155_058) do
+ActiveRecord::Schema.define(version: 20_200_130_205_453) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -47,6 +47,28 @@ ActiveRecord::Schema.define(version: 20_191_229_155_058) do
     t.index ["user_id"], name: "index_answers_on_user_id"
   end
 
+  create_table "gifts", force: :cascade do |t|
+    t.string "name"
+    t.bigint "question_id"
+    t.bigint "answer_id"
+    t.bigint "user_id"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["answer_id"], name: "index_gifts_on_answer_id"
+    t.index ["question_id"], name: "index_gifts_on_question_id"
+    t.index ["user_id"], name: "index_gifts_on_user_id"
+  end
+
+  create_table "links", force: :cascade do |t|
+    t.string "name"
+    t.string "url"
+    t.string "linkable_type"
+    t.bigint "linkable_id"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index %w[linkable_type linkable_id], name: "index_links_on_linkable_type_and_linkable_id"
+  end
+
   create_table "questions", force: :cascade do |t|
     t.string "title"
     t.text "body"
@@ -71,5 +93,8 @@ ActiveRecord::Schema.define(version: 20_191_229_155_058) do
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "answers", "questions"
   add_foreign_key "answers", "users"
+  add_foreign_key "gifts", "answers"
+  add_foreign_key "gifts", "questions"
+  add_foreign_key "gifts", "users"
   add_foreign_key "questions", "users"
 end

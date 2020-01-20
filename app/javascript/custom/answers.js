@@ -3,6 +3,16 @@ $(document).on('turbolinks:load', function(){
     e.preventDefault();
     $(this).hide();
     var answerId = $(this).data('answerId');
-    $('form#edit-answer-' + answerId).show();
+    console.log(answerId);
+    $('form#edit-answer-' + answerId).removeClass('hidden');
   });
 }); 
+
+function moveGift(placeForGift) {
+  giftQuestionPlace = $(".gift_question_place");
+  gift = $('.gift');
+  
+  if (gift.parent()[0] == giftQuestionPlace[0]) {
+    placeForGift.append(gift);
+  }  
+};

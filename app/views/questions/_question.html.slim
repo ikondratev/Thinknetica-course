@@ -1,28 +1,55 @@
-.question(id="question-#{question.id}")   
+.question-errors
+  = render 'shared/errors', resource: question
 
-    h1 
+.card-header   
+  h1 
     | Question author: #{question.user.email}
 
-    h2.card-title = question.title
-    p(class="question-error-#{question.id}")
-    p.body = question.body 
+.card-body
+  
+  h2.card-title = question.title
+  p.body = question.body
 
-    - if @question.files.attached?
+  - if @question.files.attached?
+    p Files:
+    ul
       - @question.files.each do |file|
-        p
-          = link_to file.filename.to_s, url_for(file)
-          - if current_user&.is_author_of?(question) 
-            = link_to 'delete file',  attachment_path(file), method: :delete
+        li= link_to file.filename.to_s, url_for(file)
+        - if current_user&.is_author_of?(question) 
+          = link_to 'delete file',  attachment_path(file), method: :delete
 
-    - if current_user&.is_author_of?(question)
-      p = link_to 'Delete question', question_path(question), method: :delete, remote: true
-      p = link_to 'edit', '#', class: 'edit-question-link', data: { question_id: question.id }
+  .links
+    p Links:
+    ul
+      - @question.links.each do |link|
+        li class = "link_#{link.id}"
+          p=  link_to link.name, link.url
+          -if link.gist?
+            p= link.gist_content
 
-    = form_with model: question, class: 'hidden', html: { id: "edit-question-#{question.id}" } do |f|
-      p
-        = f.label :body, 'Question: '
-        = f.text_area :body
-      p
-        = f.label :files
-        = f.file_field :files, multiple:true, direct_upload: true       
-      = f.submit 'save'  
+  .gift_question_place
+      - if question.gift.present? && question.gift.answer.nil?
+        = render question.gift                      
+                     
+
+  p = link_to 'edit', '', class: 'edit-question-link' if current_user&.is_author_of?(question)
+  p = link_to 'Delete question', question_path(question), method: :delete if current_user&.is_author_of?(question)
+
+
+= form_with model: question, class: 'hidden', id: "edit-question"  do |f|
+  p
+    = f.label :body, 'Question: '
+    = f.text_area :body
+  p
+    = f.label :files
+    = f.file_field :files, multiple:true, direct_upload: true 
+
+  p Links:
+  #question_links
+    = f.fields_for :links do |l|
+      = render 'links/link_fields', f: l
+    .links
+      = link_to_add_association 'Add link', f, :links, partial: 'links/link_fields'
+
+  = f.submit 'save'
+ 

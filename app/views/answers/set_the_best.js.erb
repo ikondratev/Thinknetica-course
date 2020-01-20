@@ -3,3 +3,8 @@
 <% else %>
   $('.answers').html("<%= j render @answers %>"); 
 <% end %>
+
+<% if answer.the_best? && answer.gift %>
+  placeForGift = $('<%= ".answer-#{answer.id} .gift_answer_place" %>');
+  moveGift(placeForGift);
+<% end %>

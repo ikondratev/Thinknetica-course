@@ -1,0 +1,7 @@
+.gift
+  p Gift
+  p= gift.name
+  - if local_assigns[:full]
+    p= gift.question.title
+  - if gift.image.attached?
+    img src=url_for(gift.image) alt=gift.name height="100" width="100"

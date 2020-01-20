@@ -4,7 +4,8 @@
     p 
       ' Author:
       = answer.user.email
-    p = 'The best' if answer.the_best?  
+    p = 'The best' if answer.the_best?
+
     p(class="answer-error-#{answer.id}")  
     p.answer-body = answer.body
 
@@ -12,11 +13,24 @@
       p = link_to 'best', set_the_best_answer_path(answer), method: :patch, remote: true
 
     - if @answer.files.attached?
-      - @answer.files.each do |file|
-        p
-          = link_to file.filename.to_s, url_for(file)
+      p Files:
+      ul
+        - @answer.files.each do |file|
+          li= link_to file.filename.to_s, url_for(file)
           - if current_user&.is_author_of?(answer) 
-            = link_to 'delete file',  attachment_path(file), method: :delete          
+            = link_to ' delete file',  attachment_path(file), method: :delete
+    .links
+      p Links:
+      ul
+        - answer.links.each do |link|
+          li class = "link_#{link.id}"
+            p= link_to link.name, link.url
+            -if link.gist?
+              p= link.gist_content
+
+    .gift_answer_place
+      - if answer.gift.present?
+        = render answer.gift                            
 
     - if current_user&.is_author_of?(answer)
       p = link_to 'Delete answer', answer, method: :delete, remote: true
@@ -26,7 +40,16 @@
       p
         = f.label :body, 'Answer: '
         = f.text_area :body
+
+      p Files:
       p
         = f.label :files
-        = f.file_field :files, multiple:true, direct_upload: true       
+        = f.file_field :files, multiple:true, direct_upload: true
+
+      #answer_links
+        = f.fields_for :links do |l|
+          = render 'links/link_fields', f: l     
+        .links
+          = link_to_add_association 'Add link', f, :links, partial: 'links/link_fields'     
+
       = f.submit 'save'  

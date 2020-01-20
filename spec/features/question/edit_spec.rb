@@ -21,14 +21,11 @@ feature 'User can edit own question', "
 
       click_on 'edit'
 
-      within '.question' do
-        fill_in 'question[body]', with: 'new line body'
-        click_on 'save'
+      fill_in 'question[body]', with: 'new line body'
+      click_on 'save'
 
-        expect(page).to_not have_content(question.body)
-        expect(page).to have_content 'new line body'
-        expect(page).to_not have_selector 'textarea'
-      end
+      expect(page).to_not have_content(question.body)
+      expect(page).to have_content 'new line body'
     end
 
     scenario 'edits own question with error' do
@@ -37,11 +34,9 @@ feature 'User can edit own question', "
 
       click_on 'edit'
 
-      within '.question ' do
-        fill_in 'question[body]', with: ''
-        click_on 'save'
-        expect(page).to have_content(question.body)
-      end
+      fill_in 'question[body]', with: ''
+      click_on 'save'
+      expect(page).to have_content(question.body)
       expect(page).to have_content "Body can't be blank"
     end
 
@@ -49,9 +44,7 @@ feature 'User can edit own question', "
       sign_in(other_user)
       visit question_path(question)
 
-      within '.question' do
-        expect(page).to_not have_link 'edit'
-      end
+      expect(page).to_not have_link 'edit'
     end
 
     scenario 'edit a question with attached files' do
@@ -60,7 +53,7 @@ feature 'User can edit own question', "
 
       click_on 'edit'
 
-      within '.question' do
+      within '#question' do
         attach_file 'File', ["#{Rails.root}/spec/rails_helper.rb", "#{Rails.root}/spec/spec_helper.rb"]
         click_on 'save'
 
