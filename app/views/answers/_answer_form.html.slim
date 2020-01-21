@@ -7,7 +7,19 @@
       p
         = f.label :body, 'Answer:'
         = f.text_area :body
+     
+      p Files:
       p
         = f.label :files
-        = f.file_field :files, multiple:true, direct_upload: true  
+        = f.file_field :files, multiple:true, direct_upload: true
+
+      p Links:
+      p
+        = f.fields_for :links do |l|
+          p
+            = l.label :name, 'Link name'
+            = l.text_field :name
+          p 
+            = l.label :url
+            = l.text_field :url      
       = f.submit 'Add', class: 'btn btn-primary'

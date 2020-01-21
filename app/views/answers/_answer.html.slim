@@ -12,11 +12,17 @@
       p = link_to 'best', set_the_best_answer_path(answer), method: :patch, remote: true
 
     - if @answer.files.attached?
-      - @answer.files.each do |file|
-        p
-          = link_to file.filename.to_s, url_for(file)
+      p Files:
+      ul
+        - @answer.files.each do |file|
+          li= link_to file.filename.to_s, url_for(file)
           - if current_user&.is_author_of?(answer) 
-            = link_to 'delete file',  attachment_path(file), method: :delete          
+            = link_to ' delete file',  attachment_path(file), method: :delete
+    .links
+      p Links:
+      ul
+        - @answer.links.each do |link|
+          li=  link_to link.name, link.url                  
 
     - if current_user&.is_author_of?(answer)
       p = link_to 'Delete answer', answer, method: :delete, remote: true
@@ -26,7 +32,20 @@
       p
         = f.label :body, 'Answer: '
         = f.text_area :body
+
+      p Files:
       p
         = f.label :files
-        = f.file_field :files, multiple:true, direct_upload: true       
+        = f.file_field :files, multiple:true, direct_upload: true
+
+      p Links:
+      p
+        = f.fields_for :links do |l|
+          p
+            = l.label :name, 'Link name'
+            = l.text_field :name
+          p 
+            = l.label :url
+            = l.text_field :url    
+
       = f.submit 'save'  

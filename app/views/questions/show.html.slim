@@ -12,20 +12,23 @@
     p.body = question.body
 
     - if @question.files.attached?
-      - @question.files.each do |file|
-        p
-          = link_to file.filename.to_s, url_for(file)
+      p Files:
+      ul
+        - @question.files.each do |file|
+          li= link_to file.filename.to_s, url_for(file)
           - if current_user&.is_author_of?(question) 
             = link_to 'delete file',  attachment_path(file), method: :delete
 
-    - if current_user&.is_author_of?(question)
-      p = link_to 'Delete question', question_path(question), method: :delete, remote: true
-      p = link_to 'edit', '#', class: 'edit-question-link', data: { question_id: question.id }
     .links
       p Links:
       ul
         - @question.links.each do |link|
-          li=  link_to link.name, link.url
+          li=  link_to link.name, link.url            
+
+    - if current_user&.is_author_of?(question)
+      p = link_to 'Delete question', question_path(question), method: :delete, remote: true
+      p = link_to 'edit', '#', class: 'edit-question-link', data: { question_id: question.id }
+
 
     = form_with model: question, class: 'hidden', html: { id: "edit-question-#{question.id}" } do |f|
       p
@@ -33,7 +36,18 @@
         = f.text_area :body
       p
         = f.label :files
-        = f.file_field :files, multiple:true, direct_upload: true             
+        = f.file_field :files, multiple:true, direct_upload: true 
+
+      p Links:
+      p
+        = f.fields_for :links do |l|
+          p
+            = l.label :name, 'Link name'
+            = l.text_field :name
+          p 
+            = l.label :url
+            = l.text_field :url
+
       = f.submit 'save'  
         
 .card
