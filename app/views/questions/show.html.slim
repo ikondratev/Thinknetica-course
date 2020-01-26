@@ -23,7 +23,8 @@
       p Links:
       ul
         - @question.links.each do |link|
-          li=  link_to link.name, link.url            
+          li=  link_to link.name, link.url
+          = link_to 'delete', link_path(link), method: :delete              
 
     - if current_user&.is_author_of?(question)
       p = link_to 'Delete question', question_path(question), method: :delete, remote: true

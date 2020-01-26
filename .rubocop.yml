@@ -26,7 +26,7 @@ Metrics/MethodLength:
   Max: 30
 
 Metrics/BlockLength:
-  Max: 120  
+  Max: 150
   
 Naming/PredicateName:
   Enabled: false

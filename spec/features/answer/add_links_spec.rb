@@ -11,7 +11,7 @@ feature 'User can add links to answer', "
 
   scenario 'User adds link when send answer', js: true do
     sign_in(user)
-   
+
     visit question_path(question)
 
     fill_in 'answer[body]', with: 'New answer'

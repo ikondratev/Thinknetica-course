@@ -3,6 +3,6 @@ $(document).on('turbolinks:load', function(){
     e.preventDefault();
     $(this).hide();
     var answerId = $(this).data('answerId');
-    $('form#edit-answer-' + answerId).show();
+    $('form#edit-answer-' + answerId).removeClass('hidden');
   });
 }); 
