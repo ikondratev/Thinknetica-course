@@ -39,3 +39,6 @@ Metrics/AbcSize:
 
 Style/MixinUsage:
   Enabled: false  
+
+Lint/AmbiguousOperator:
+  Enabled: false  

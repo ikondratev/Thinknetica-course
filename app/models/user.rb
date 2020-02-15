@@ -13,4 +13,8 @@ class User < ApplicationRecord
   def is_author_of?(resource)
     id == resource&.user_id
   end
+
+  def is_not_author_of?(resource)
+    !is_author_of?(resource)
+  end
 end

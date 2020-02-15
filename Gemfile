@@ -32,7 +32,7 @@ gem 'bootsnap', '>= 1.4.2', require: false
 gem "cocoon"
 gem 'devise'
 gem 'jquery-rails'
-gem "octokit", "~> 4.0"
+gem "octokit"
 gem 'slim-rails'
 gem 'validate_url'
 

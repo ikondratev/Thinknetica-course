@@ -1,4 +1,6 @@
 class Question < ApplicationRecord
+  include Voteable
+
   belongs_to :user
 
   has_many :answers, -> { order_by_the_best }, dependent: :destroy

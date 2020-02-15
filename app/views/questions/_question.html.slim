@@ -30,7 +30,9 @@
   .gift_question_place
       - if question.gift.present? && question.gift.answer.nil?
         = render question.gift                      
-                     
+  
+  .question-score
+    = render "votes/score", thing: question                   
 
   p = link_to 'edit', '', class: 'edit-question-link' if current_user&.is_author_of?(question)
   p = link_to 'Delete question', question_path(question), method: :delete if current_user&.is_author_of?(question)
