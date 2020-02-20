@@ -1,7 +1,9 @@
 class AnswersController < ApplicationController
   include Voted
+  include Commented
 
   before_action :authenticate_user!
+  after_action :publish_answer, only: [:create]
 
   helper_method :answer
   helper_method :question
@@ -31,6 +33,18 @@ class AnswersController < ApplicationController
   end
 
   private
+
+  def publish_answer
+    return if answer.errors.any?
+
+    AnswersChannel.broadcast_to(
+      answer.question,
+      answer: answer,
+      email: answer.user.email,
+      links: helpers.links(answer.links),
+      files: helpers.urls(answer.files)
+    )
+    end
 
   def answer
     @answer ||= params[:id] ? Answer.with_attached_files.find(params[:id]) : question.answers.new

@@ -1,0 +1,11 @@
+- best = if @answer.best == true then ' best' else ''
+- answerClass = "answer answer_#{@answer.id}#{best}"
+div class = answerClass
+  - best_sign_classes = if @answer.best == true then 'best-sign' else 'best-sign hidden'
+  div class = best_sign_classes 'Best answer!'
+  = @answer.body
+
+  - if @files.length
+    - @files.forEach (f) ->        
+        div
+          a href="#{f.url}" = f.name

@@ -28,7 +28,6 @@ feature 'User can edit own answer', "
 
         expect(page).to_not have_content(answer.body)
         expect(page).to have_content 'new line body'
-        expect(page).to_not have_selector 'textarea'
       end
     end
 

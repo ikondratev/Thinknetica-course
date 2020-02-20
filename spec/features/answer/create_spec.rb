@@ -7,6 +7,7 @@ feature 'User can creates answer', "
   page" do
     given(:user) { create(:user) }
     given(:question) { create(:question) }
+    given(:link_url) { 'http://google.com' }
 
     describe 'Authenticated user', js: true do
       background do
@@ -49,7 +50,41 @@ feature 'User can creates answer', "
 
         click_on 'delete file'
 
-        expect(page).not_to have_link 'rails_helper.rb'
+        expect(page).not_to have_link 'rails_helper_new.rb'
+      end
+
+      context "Multiple sessions", js: true do
+        scenario "answers appears on another user's page" do
+          Capybara.using_session('user') do
+            sign_in(user)
+            visit question_path(question)
+          end
+
+          Capybara.using_session('guest') do
+            visit question_path(question)
+          end
+
+          Capybara.using_session('user') do
+            fill_in 'answer[body]', with: 'New answer'
+
+            attach_file 'File', ["#{Rails.root}/spec/rails_helper.rb"]
+
+            click_on 'Add link'
+            fill_in 'Link name', with: 'My link'
+            fill_in 'Url', with: link_url
+
+            click_on 'Add'
+            expect(page).to have_link 'rails_helper.rb'
+            expect(page).to have_content 'New answer'
+            expect(page).to have_content 'My link'
+          end
+
+          Capybara.using_session('guest') do
+            expect(page).to have_link 'rails_helper.rb'
+            expect(page).to have_content 'New answer'
+            expect(page).to have_content 'My link'
+          end
+        end
       end
     end
 

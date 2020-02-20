@@ -31,8 +31,11 @@ gem 'jbuilder', '~> 2.7'
 gem 'bootsnap', '>= 1.4.2', require: false
 gem "cocoon"
 gem 'devise'
+gem 'gon'
 gem 'jquery-rails'
 gem "octokit"
+gem 'pry-rails'
+gem 'skim'
 gem 'slim-rails'
 gem 'validate_url'
 

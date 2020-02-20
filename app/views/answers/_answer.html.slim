@@ -33,7 +33,10 @@
         = render answer.gift
 
     .answer-score  
-      = render "votes/score", thing: answer                              
+      = render "votes/score", thing: answer  
+
+
+    = render "comments/comments", thing: answer                              
 
     - if current_user&.is_author_of?(answer)
       p = link_to 'Delete answer', answer, method: :delete, remote: true

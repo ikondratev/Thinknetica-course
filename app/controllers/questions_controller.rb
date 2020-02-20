@@ -1,15 +1,21 @@
 class QuestionsController < ApplicationController
   include Voted
+  include Commented
 
   before_action :authenticate_user!, except: %i[index show]
 
   helper_method :question
+
+  after_action :publish_question, only: [:create]
 
   def index
     @questions = Question.all
   end
 
   def show
+    gon.question_id = question.id
+    gon.user_id = current_user ? current_user.id : 0
+
     @answer = question.answers.new
     @answer.links.new
   end
@@ -47,6 +53,12 @@ class QuestionsController < ApplicationController
 
   def question
     @question ||= params[:id] ? Question.with_attached_files.find(params[:id]) : current_user.questions.new
+  end
+
+  def publish_question
+    return if @question.errors.any?
+
+    ActionCable.server.broadcast('questions', question: @question)
   end
 
   def question_params

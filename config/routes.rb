@@ -8,8 +8,13 @@ Rails.application.routes.draw do
     post :dislike, on: :member
   end
 
-  resources :questions, concerns: [:votable] do
-    resources :answers, concerns: [:votable], only: %i[create update destroy], shallow: true do
+  concern :commentable do
+    resources :comments, only: :create
+  end
+
+  resources :questions, concerns: %i[votable commentable], shallow: true do
+    resources :comments, only: :create
+    resources :answers, concerns: %i[votable commentable], only: %i[create update destroy] do
       patch 'set_the_best', on: :member
     end
   end
@@ -17,4 +22,6 @@ Rails.application.routes.draw do
   resources :attachments, only: :destroy
   resources :links, only: :destroy
   resources :gifts, only: :index
+
+  mount ActionCable.server => '/cable'
 end

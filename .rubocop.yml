@@ -42,3 +42,9 @@ Style/MixinUsage:
 
 Lint/AmbiguousOperator:
   Enabled: false  
+
+Naming/MemoizedInstanceVariableName:
+  Enabled: false
+
+Layout/DefEndAlignment:
+  Enabled: false  

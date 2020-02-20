@@ -17,7 +17,7 @@
         li= link_to file.filename.to_s, url_for(file)
         - if current_user&.is_author_of?(question) 
           = link_to 'delete file',  attachment_path(file), method: :delete
-
+          
   .links
     p Links:
     ul
@@ -29,10 +29,13 @@
 
   .gift_question_place
       - if question.gift.present? && question.gift.answer.nil?
-        = render question.gift                      
+        = render question.gift                               
   
   .question-score
-    = render "votes/score", thing: question                   
+    = render "votes/score", thing: question     
+
+
+  = render "comments/comments", thing: question                    
 
   p = link_to 'edit', '', class: 'edit-question-link' if current_user&.is_author_of?(question)
   p = link_to 'Delete question', question_path(question), method: :delete if current_user&.is_author_of?(question)

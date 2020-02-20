@@ -1,0 +1,2 @@
+p class="question_#{@question.id}"
+  a href="/questions/#{@question.id}" =@question.title

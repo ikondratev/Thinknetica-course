@@ -1,19 +1,15 @@
 p= link_to 'Ask question', new_question_path
 
 h1 List of questions
-table
-  thead
-    tr
-      th Title
-      th Body
-      th Answers
-    tbody
+.questions-list
+  table
     - if @questions.any?
       - @questions.each do |question|
-        tr
-          td= link_to question.title, question_path(question)
-          td= link_to question.body, question_path(question)
-          td= question.answers.count     
+          tr
+            td.title = link_to question.title, question_path(question)
+            td.body = link_to question.body, question_path(question)     
     - else
-       tr
-         td No question yeat          
+      tr
+        td No question yeat          
+
+.test_jst
