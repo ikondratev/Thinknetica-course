@@ -19,4 +19,6 @@ class User < ApplicationRecord
   def is_not_author_of?(resource)
     !is_author_of?(resource)
   end
+
+  def self.find_for_oauth(auth); end
 end
