@@ -1,5 +1,5 @@
 Rails.application.routes.draw do
-  devise_for :users
+  devise_for :users, controllers: { omniauth_callbacks: 'oauth_callbacks' }
 
   root to: 'questions#index'
 
@@ -24,4 +24,6 @@ Rails.application.routes.draw do
   resources :gifts, only: :index
 
   mount ActionCable.server => '/cable'
+
+  resources :authorizations, only: %i[new create]
 end

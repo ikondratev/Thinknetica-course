@@ -34,10 +34,17 @@ gem 'devise'
 gem 'gon'
 gem 'jquery-rails'
 gem "octokit"
+gem 'omniauth'
+gem 'omniauth-facebook'
+gem 'omniauth-github'
+gem 'omniauth-twitter'
 gem 'pry-rails'
 gem 'skim'
 gem 'slim-rails'
 gem 'validate_url'
+
+gem 'capybara-email'
+gem "letter_opener", group: :development
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
@@ -62,6 +69,8 @@ group :test do
   gem 'selenium-webdriver'
   gem 'shoulda-matchers'
   # Easy installation and use of web drivers to run system tests with browsers
+  gem 'cucumber-rails', require: false
+  gem 'database_cleaner'
   gem 'launchy'
   gem 'webdrivers'
 end
