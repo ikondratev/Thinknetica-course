@@ -48,3 +48,6 @@ Naming/MemoizedInstanceVariableName:
 
 Layout/DefEndAlignment:
   Enabled: false  
+
+Style/IdenticalConditionalBranches:
+  Enabled: false  

@@ -19,6 +19,8 @@ module PostF
     # the framework and any gems in your application.
     config.action_cable.disable_request_forgery_protection = false
 
+    config.autoload_paths += [config.root.join('app')]
+
     config.generators do |g|
       g.test_framework :rspec,
                        view_specs: false,
