@@ -48,7 +48,7 @@ RSpec.describe OauthCallbacksController, type: :controller do
     end
   end
 
-   describe 'Facebook' do
+  describe 'Facebook' do
     let(:oauth_data) { { "provider": "facebook", "uid": "2312173752420828" } }
 
     it 'finds user from oauth data' do

@@ -4,13 +4,13 @@ class OauthCallbacksController < Devise::OmniauthCallbacksController
   end
 
   def facebook
-  	auth_social('Facebook')
+    auth_social('Facebook')
   end
 
-  private 
+  private
 
   def auth_social(name)
-     @user = User.find_for_oauth(request.env['omniauth.auth'])
+    @user = User.find_for_oauth(request.env['omniauth.auth'])
 
     if @user&.persisted?
       sign_in_and_redirect @user, event: :authentication
