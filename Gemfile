@@ -36,6 +36,7 @@ gem 'jquery-rails'
 gem "octokit"
 gem 'omniauth'
 gem 'omniauth-github'
+gem 'omniauth-facebook'
 gem 'pry-rails'
 gem 'skim'
 gem 'slim-rails'
