@@ -9,6 +9,8 @@ class OauthCallbacksController < Devise::OmniauthCallbacksController
 
   def twitter
     get_user_from('Twitter')
+    # AuthMailer.notify_record(email: 'kondratevilya@bk.ru', text: 'blablabla').deliver_now
+    # render json: request.env['omniauth.auth']
   end
 
   private
