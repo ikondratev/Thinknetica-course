@@ -1,19 +1,19 @@
 class OauthCallbacksController < Devise::OmniauthCallbacksController
   def github
-    auth_social('Github')
+    get_user_from('Github')
   end
 
   def facebook
-    auth_social('Facebook')
+    get_user_from('Facebook')
   end
 
   def twitter
-    auth_social('Twitter')
+    get_user_from('Twitter')
   end
 
   private
 
-  def auth_social(name)
+  def get_user_from(name)
     @user = User.find_for_oauth(request.env['omniauth.auth'])
 
     if @user&.persisted?
