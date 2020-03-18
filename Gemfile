@@ -37,6 +37,7 @@ gem "octokit"
 gem 'omniauth'
 gem 'omniauth-facebook'
 gem 'omniauth-github'
+gem 'omniauth-twitter'
 gem 'pry-rails'
 gem 'skim'
 gem 'slim-rails'

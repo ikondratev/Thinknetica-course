@@ -7,6 +7,10 @@ class OauthCallbacksController < Devise::OmniauthCallbacksController
     auth_social('Facebook')
   end
 
+  def twitter
+    auth_social('Twitter')
+  end
+
   private
 
   def auth_social(name)
