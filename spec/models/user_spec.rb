@@ -33,4 +33,17 @@ RSpec.describe User, type: :model do
       User.find_for_oauth(auth)
     end
   end
+
+  describe '.create_by_email' do
+    let(:params) { { provider: 'github', uid: '123', email: 'test@test.test' } }
+
+    it 'Create and get new user' do
+      expect(User.create_by_email(params)).to be_a User
+    end
+
+    it 'Do not create and return User if user exist' do
+      create(:user, email: 'test@test.test')
+      expect(User.create_by_email(params)).to be_a User
+    end
+  end
 end

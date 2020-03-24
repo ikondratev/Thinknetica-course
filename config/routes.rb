@@ -3,6 +3,8 @@ Rails.application.routes.draw do
 
   root to: 'questions#index'
 
+  get 'authorizations/new'
+
   concern :votable do
     post :like, on: :member
     post :dislike, on: :member
@@ -24,4 +26,6 @@ Rails.application.routes.draw do
   resources :gifts, only: :index
 
   mount ActionCable.server => '/cable'
+
+  resources :authorizations, only: %i[new create]
 end
