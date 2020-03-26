@@ -9,14 +9,14 @@ class OauthCallbacksController < Devise::OmniauthCallbacksController
 
   def twitter
     get_user_from('Twitter')
-    # AuthMailer.notify_record(email: 'kondratevilya@bk.ru', text: 'blablabla').deliver_now
-    # render json: request.env['omniauth.auth']
   end
 
   private
 
   def get_user_from(name)
-    @user = User.find_for_oauth(request.env['omniauth.auth'])
+    oauth = request.env['omniauth.auth']
+
+    @user = User.find_for_oauth(oauth)
 
     if @user&.persisted?
       sign_in_and_redirect @user, event: :authentication

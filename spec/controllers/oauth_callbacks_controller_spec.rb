@@ -6,7 +6,7 @@ RSpec.describe OauthCallbacksController, type: :controller do
   end
 
   describe 'Github' do
-    let(:oauth_data) { { "provider": "github", "uid": "52237094" } }
+    let(:oauth_data) { OmniAuth.config.mock_auth[:github] }
 
     it 'finds user from oauth data' do
       allow(request.env).to receive(:[]).and_call_original
@@ -49,7 +49,7 @@ RSpec.describe OauthCallbacksController, type: :controller do
   end
 
   describe 'Facebook' do
-    let(:oauth_data) { { "provider": "facebook", "uid": "2312173752420828" } }
+    let(:oauth_data) { OmniAuth.config.mock_auth[:facebook] }
 
     it 'finds user from oauth data' do
       allow(request.env).to receive(:[]).and_call_original
