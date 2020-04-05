@@ -2,8 +2,9 @@ class AuthMailer < ActionMailer::Base
   default from: 'ilyafulleveline@gmail.com'
 
   def notify_record(args)
-    @text = args[:text]
+    @token = args[:token]
     @email = args[:email]
-    mail(to: @email, subject: 'TEstststst')
+
+    mail(to: @email, subject: 'Registration new User')
   end
 end

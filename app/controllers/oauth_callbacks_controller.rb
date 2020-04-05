@@ -1,28 +1,44 @@
 class OauthCallbacksController < Devise::OmniauthCallbacksController
   def github
-    get_user_from('Github')
+    authorize_with('Github')
   end
 
   def facebook
-    get_user_from('Facebook')
+    authorize_with('Facebook')
   end
 
   def twitter
-    get_user_from('Twitter')
+    authorize_with('Twitter')
   end
 
   private
 
-  def get_user_from(name)
-    oauth = request.env['omniauth.auth']
+  def authorize_with(name)
+    @name = name
+    @auth = request.env['omniauth.auth']
 
-    @user = User.find_for_oauth(oauth)
+    @name == 'Twitter' ? email_not_present : email_present
+  end
+
+  def email_present
+    @user = User.find_for_oauth(@auth)
 
     if @user&.persisted?
       sign_in_and_redirect @user, event: :authentication
-      set_flash_message(:notie, :success, kind: name) if is_navigational_format?
+      set_flash_message(:notie, :success, kind: @name) if is_navigational_format?
     else
       redirect_to root_path, alert: 'Something went wrong.'
+    end
+  end
+
+  def email_not_present
+    @user = User.find_for_oauth(@auth)
+
+    if @user&.persisted?
+      sign_in_and_redirect @user, event: :authentication
+      set_flash_message(:notie, :success, kind: @name) if is_navigational_format?
+    else
+      render "authorizations/new"
     end
   end
 end

@@ -1,7 +1,7 @@
 .item
   h1 New user!
   p For authorization with #{@auth.provider} please enter email
-  = form_tag authorizations_path do
+  = form_tag authorizations_path(auth: @auth) do
     .form-group
       = text_field 'email', @email
-      = f.submit 'save'  'Enter'
+      = submit_tag 'save'

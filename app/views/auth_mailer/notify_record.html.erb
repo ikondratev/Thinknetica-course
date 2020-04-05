@@ -1,5 +1,6 @@
-<p>Welcome <%= @email %>!</p>
+<p>Welcome <%= @email %></p>
 
 <p>You can confirm your account email through the link below:</p>
+<p><%= link_to 'Confirm account', edit_authorization_url(@token, email: @email) %></p>
 
 <p><%= @text %></p>

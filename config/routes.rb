@@ -25,7 +25,7 @@ Rails.application.routes.draw do
   resources :links, only: :destroy
   resources :gifts, only: :index
 
-  mount ActionCable.server => '/cable'
+  resources :authorizations, only: %i[new create edit]
 
-  resources :authorizations, only: %i[new create]
+  mount ActionCable.server => '/cable'
 end
