@@ -1,19 +1,13 @@
 require 'rails_helper'
 
 RSpec.describe AuthorizationsController, type: :controller do
-  # let(:valid_params) { { provider: 'facebook', uid: '123123', email: 'test@test.ru' } }
+  let(:params) { { email: ['test@test.test'], auth: { provider: 'github', uid: '123' } } }
 
-  # before do
-  #   session[:auth] = { 'uid' => '123123', 'provider' => 'facebook' }
-  # end
+  describe 'POST#create' do
+    before { post :create, params: params }
 
-  describe 'POST #create' do
-    it 'saves the new Authorization in the database' do
-      # expect { post :create, params: valid_params }.to change(Authorization, :count).by(1)
-    end
-    it 'redirect to root' do
-      # post :create, params: valid_params
-      # expect(response).to redirect_to root_path
+    it 'sending email with content' do
+      expect(current_email).to have_content 'Confirm account'
     end
   end
 end
