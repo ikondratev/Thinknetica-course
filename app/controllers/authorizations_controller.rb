@@ -19,7 +19,6 @@ class AuthorizationsController < ApplicationController
       @user.save
 
       AuthMailer.notify_record(email: @email, token: @user.confirmation_token).deliver_now
-      binding.pry
 
       render 'authorizations/confirmation'
     end
