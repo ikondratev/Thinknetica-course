@@ -37,8 +37,8 @@
 
   = render "comments/comments", thing: question                    
 
-  p = link_to 'edit', '', class: 'edit-question-link' if current_user&.is_author_of?(question)
-  p = link_to 'Delete question', question_path(question), method: :delete if current_user&.is_author_of?(question)
+  p = link_to 'edit', '', class: 'edit-question-link' if can?(:create, Question)
+  p = link_to 'Delete question', question_path(question), method: :delete if can?(:create, Question)
 
 
 = form_with model: question, class: 'hidden', id: "edit-question"  do |f|

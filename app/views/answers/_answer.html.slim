@@ -9,7 +9,7 @@
     p(class="answer-error-#{answer.id}")  
     p.answer-body = answer.body
 
-    - if current_user&.is_author_of?(question) && !answer.the_best?
+    - if can?(:create, Question) && !answer.the_best?
       p = link_to 'best', set_the_best_answer_path(answer), method: :patch, remote: true
 
     - if @answer.files.attached?
@@ -38,7 +38,7 @@
 
     = render "comments/comments", thing: answer                              
 
-    - if current_user&.is_author_of?(answer)
+    - if can?(:create, Answer)
       p = link_to 'Delete answer', answer, method: :delete, remote: true
       p = link_to 'edit', '#', class: 'edit-answer-link', data: { answer_id: answer.id }
 

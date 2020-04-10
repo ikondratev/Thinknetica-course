@@ -8,6 +8,7 @@ class AnswersController < ApplicationController
   helper_method :answer
   helper_method :question
 
+  authorize_resource
   def create
     @answer = question.answers.new(answer_params)
     @answer.user = current_user
@@ -15,7 +16,7 @@ class AnswersController < ApplicationController
   end
 
   def update
-    flash.now[:notice] = "Your answer have been successfully updated" if current_user.is_author_of?(answer) && answer.update(answer_params)
+    flash.now[:notice] = "Your answer have been successfully updated" if answer.update(answer_params)
   end
 
   def destroy
@@ -26,10 +27,8 @@ class AnswersController < ApplicationController
   end
 
   def set_the_best
-    if current_user.is_author_of?(question)
-      answer.set_the_best
-      @answers = answer.question.answers.reload
-    end
+    answer.set_the_best
+    @answers = answer.question.answers.reload
   end
 
   private

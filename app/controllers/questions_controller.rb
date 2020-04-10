@@ -8,6 +8,8 @@ class QuestionsController < ApplicationController
 
   after_action :publish_question, only: [:create]
 
+  authorize_resource
+
   def index
     @questions = Question.all
   end
@@ -37,16 +39,12 @@ class QuestionsController < ApplicationController
   end
 
   def update
-    flash.now[:notice] = "Your question have been successfully updated" if current_user.is_author_of?(question) && question.update(question_params)
+    flash.now[:notice] = "Your question have been successfully updated" if question.update(question_params)
   end
 
   def destroy
-    if current_user.is_author_of?(question)
-      question.destroy
-      redirect_to questions_path, notice: "Your question have been successfully destroyed."
-    else
-      redirect_to question, notice: 'No access to delete.'
-    end
+    question.destroy
+    redirect_to questions_path, notice: "Your question have been successfully destroyed."
   end
 
   private

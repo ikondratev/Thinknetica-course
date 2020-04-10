@@ -20,8 +20,6 @@ class Authorization < ApplicationRecord
     @auth
   end
 
-  private
-
   def self.invalid?
     @params[:provider].blank? || @params[:uid].blank? || @params[:email].blank?
   end

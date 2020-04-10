@@ -1,4 +1,6 @@
 class AuthorizationsController < ApplicationController
+  authorize_resource
+
   def new; end
 
   def create
