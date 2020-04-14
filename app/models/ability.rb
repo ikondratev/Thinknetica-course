@@ -27,6 +27,7 @@ class Ability
     can :create, [Question, Answer, Comment, Link, File, Gift]
     can :update, [Question, Answer], user_id: user.id
     can :destroy, [Question, Answer], user_id: user.id
+    can :profile, User, id: user.id
 
     can :set_the_best, Answer do |answer|
       user.is_author_of?(answer.question)

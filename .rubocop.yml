@@ -11,7 +11,7 @@ Style/FrozenStringLiteralComment:
   Enabled: false
 
 Metrics/LineLength:
-  Max: 170
+  Max: 190
 
 Style/Documentation:
   Enabled: false
@@ -23,10 +23,10 @@ Style/GlobalVars:
   Enabled: false
 
 Metrics/MethodLength:
-  Max: 40
+  Max: 77
 
 Metrics/BlockLength:
-  Max: 150
+  Max: 177
   
 Naming/PredicateName:
   Enabled: false

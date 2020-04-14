@@ -1,6 +1,7 @@
 FactoryBot.define do
-  factory :link do
-    name { "My link" }
-    url { "https://example.com" }
+  factory :link, class: 'Link' do |link|
+    link.linkable { |c| c.association(:question) }
+    sequence(:name) { |_n| "My link" }
+    sequence(:url) { |_n| "https://example.com" }
   end
 end

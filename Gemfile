@@ -28,13 +28,16 @@ gem 'jbuilder', '~> 2.7'
 # gem 'image_processing', '~> 1.2'
 
 # Reduces boot times through caching; required in config/boot.rb
+gem 'active_model_serializers', '~> 0.10'
 gem 'bootsnap', '>= 1.4.2', require: false
 gem 'cancancan'
 gem "cocoon"
 gem 'devise'
+gem 'doorkeeper'
 gem 'gon'
 gem 'jquery-rails'
 gem "octokit"
+gem 'oj'
 gem 'omniauth'
 gem 'omniauth-facebook'
 gem 'omniauth-github'
