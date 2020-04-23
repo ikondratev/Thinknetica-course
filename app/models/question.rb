@@ -13,4 +13,12 @@ class Question < ApplicationRecord
   accepts_nested_attributes_for :gift, reject_if: :all_blank
 
   validates :title, :body, presence: true
+
+  after_create :calculate_reputation
+
+  private 
+
+  def calculate_reputation
+    ReputationJob.perform_later(self)
+  end
 end

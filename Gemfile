@@ -46,6 +46,7 @@ gem 'pry-rails'
 gem 'skim'
 gem 'slim-rails'
 gem 'validate_url'
+gem 'sidekiq'
 
 gem 'capybara-email'
 gem "letter_opener", group: :development
