@@ -33,6 +33,10 @@ RSpec.describe QuestionsController, type: :controller do
     it 'renders show view' do
       expect(response).to render_template :show
     end
+
+    it 'assign new subscriptio' do
+      expect(assigns(:subscription)).to be_a_new(Subscription)
+    end
   end
 
   describe 'GET #new' do

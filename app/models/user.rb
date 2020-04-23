@@ -8,6 +8,7 @@ class User < ApplicationRecord
   has_many :answers
   has_many :questions
   has_many :gifts
+  has_many :subscriptions, dependent: :destroy
   has_many :comments, dependent: :destroy
   has_many :authorizations, dependent: :destroy
 
@@ -37,5 +38,9 @@ class User < ApplicationRecord
     end
 
     user
+  end
+
+  def subscribed?(question)
+    subscriptions.where(user_id: id, question_id: question.id).present?
   end
 end

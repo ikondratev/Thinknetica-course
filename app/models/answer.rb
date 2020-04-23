@@ -15,6 +15,8 @@ class Answer < ApplicationRecord
 
   validates :body, presence: true, length: { minimum: 5 }
 
+  after_create :notify
+
   def set_the_best
     transaction do
       question.answers.where(the_best: true).update_all(the_best: false)
@@ -24,6 +26,10 @@ class Answer < ApplicationRecord
   end
 
   private
+
+  def notify
+    NotifyJob.perform_later(self)
+  end
 
   def reward
     gift = question.gift

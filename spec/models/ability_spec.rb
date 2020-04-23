@@ -70,5 +70,20 @@ describe Ability do
       it { should be_able_to :dislike, other_question, user: user }
       it { should_not be_able_to :dislike, question, user: user }
     end
+
+    context 'subscribe' do
+      let(:user) { create(:user) }
+      let(:other_user) { create(:user) }
+      let(:question) { create(:question, user: user) }
+      let(:subscription) { question.subscriptions.new(user: other_user) }
+
+      context 'can subscribe' do
+        it { should be_able_to :create, Subscription, subscription, user: other_user }
+      end
+
+      context 'can not subscribe' do
+        it { should_not be_able_to :create, subscription, Subscription, user: user }
+      end
+    end
   end
 end

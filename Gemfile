@@ -43,9 +43,12 @@ gem 'omniauth-facebook'
 gem 'omniauth-github'
 gem 'omniauth-twitter'
 gem 'pry-rails'
+gem 'sidekiq'
+gem 'sinatra', require: false
 gem 'skim'
 gem 'slim-rails'
 gem 'validate_url'
+gem 'whenever', require: false
 
 gem 'capybara-email'
 gem "letter_opener", group: :development

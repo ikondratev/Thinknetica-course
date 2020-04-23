@@ -1,4 +1,10 @@
+require 'sidekiq/web'
+
 Rails.application.routes.draw do
+  authenticate :user, ->(u) { u.admin? } do
+    mount Sidekiq::Web => '/sidekiq'
+  end
+
   use_doorkeeper
   devise_for :users, controllers: { omniauth_callbacks: 'oauth_callbacks' }
 
@@ -14,6 +20,11 @@ Rails.application.routes.draw do
   end
 
   resources :questions, concerns: %i[votable commentable], shallow: true do
+    member do
+      post :subscribe
+      delete :unsubscribe
+    end
+    resource :subscription, only: %i[create destroy]
     resources :comments, only: :create
     resources :answers, concerns: %i[votable commentable], only: %i[create update destroy] do
       patch 'set_the_best', on: :member
