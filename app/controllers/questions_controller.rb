@@ -8,7 +8,7 @@ class QuestionsController < ApplicationController
 
   after_action :publish_question, only: [:create]
 
-  authorize_resource
+  authorize_resource except: %i[destroy update]
 
   def index
     @questions = Question.all
@@ -20,6 +20,7 @@ class QuestionsController < ApplicationController
 
     @answer = question.answers.new
     @answer.links.new
+    @subscription = question.subscriptions.new(user: current_user)
   end
 
   def new
@@ -39,10 +40,13 @@ class QuestionsController < ApplicationController
   end
 
   def update
+    authorize! :update, question
     flash.now[:notice] = "Your question have been successfully updated" if question.update(question_params)
   end
 
   def destroy
+    authorize! :destroy, question
+
     question.destroy
     redirect_to questions_path, notice: "Your question have been successfully destroyed."
   end
