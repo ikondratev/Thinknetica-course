@@ -48,5 +48,13 @@ class Ability
     can :destroy, ActiveStorage::Attachment do |thing|
       user.is_author_of?(thing.record)
     end
+
+    can :create, Subscription do |thing|
+      !user.subscribed?(thing.question)
+    end
+
+    can :destroy, Subscription do |thing|
+      user.subscribed?(thing.question)
+    end
   end
 end

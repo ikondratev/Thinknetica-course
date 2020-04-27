@@ -35,10 +35,12 @@
     = render "votes/score", thing: question     
 
 
-  = render "comments/comments", thing: question                    
+  = render "comments/comments", thing: question    
 
-  p = link_to 'edit', '', class: 'edit-question-link' if can?(:create, Question)
-  p = link_to 'Delete question', question_path(question), method: :delete if can?(:create, Question)
+  p = link_to 'Subscribe', question_subscription_path(question), method: :post if can?(:create, @subscription)
+  p = link_to 'Unsubscribe', question_subscription_path(question), method: :delete if can?(:destroy, @subscription)
+  p = link_to 'edit', '', class: 'edit-question-link' if can?(:update, @question)
+  p = link_to 'Delete question', question_path(question), method: :delete if can?(:destroy, @question)
 
 
 = form_with model: question, class: 'hidden', id: "edit-question"  do |f|

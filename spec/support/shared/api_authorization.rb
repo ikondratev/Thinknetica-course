@@ -36,3 +36,15 @@ shared_examples 'Returns all public fields' do |json_objectable, objectable|
     end
   end
 end
+
+shared_examples 'change count object' do |klass, count|
+  it 'it save object' do
+    expect { subject }.to change(klass, :count).by(count)
+  end
+end
+
+shared_examples 'not change count object' do |klass|
+  it 'do not save object' do
+    expect { subject }.to_not change(klass, :count)
+  end
+end
