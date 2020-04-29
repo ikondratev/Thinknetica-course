@@ -1,0 +1,8 @@
+.align-right
+  = form_tag search_path, method: :get do
+    = select_tag :thing,
+          options_for_select(SearchService::THINGS, params[:thing]),
+          include_blank: 'Search'
+    = text_field_tag :search_line,
+          params[:search_line]
+    = submit_tag 'Search'

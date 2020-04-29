@@ -36,6 +36,7 @@ gem 'devise'
 gem 'doorkeeper'
 gem 'gon'
 gem 'jquery-rails'
+gem 'mysql2'
 gem "octokit"
 gem 'oj'
 gem 'omniauth'
@@ -47,6 +48,7 @@ gem 'sidekiq'
 gem 'sinatra', require: false
 gem 'skim'
 gem 'slim-rails'
+gem 'thinking-sphinx'
 gem 'validate_url'
 gem 'whenever', require: false
 

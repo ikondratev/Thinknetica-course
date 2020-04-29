@@ -49,16 +49,16 @@ RSpec.describe User, type: :model do
 
   describe '.subscribed?' do
     let(:user) { create(:user) }
-    let(:another_user) { create(:user) }  
+    let(:another_user) { create(:user) }
     let(:question) { create(:question) }
     let!(:subscription) { create(:subscription, user: user, question: question) }
 
     it 'returns true' do
       expect(user.subscribed?(question)).to eq true
     end
-    
+
     it 'returns false' do
       expect(another_user.subscribed?(question)).to eq false
-    end  
-  end  
+    end
+  end
 end

@@ -24,6 +24,7 @@
 # Ignore master key for decrypting credentials and more.
 /config/master.key
 /config/database.yml
+config/*.sphinx.conf
 /Gemfile.lock
 
 /public/packs
@@ -33,3 +34,4 @@
 yarn-debug.log*
 .yarn-integrity
 /images/
+db/sphinx

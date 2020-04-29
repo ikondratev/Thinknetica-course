@@ -1,0 +1,5 @@
+-if @results.any?
+  -@results.each do |object|
+    = render partial: "#{object.class.name.downcase}", object: object
+-else
+  |No results.
