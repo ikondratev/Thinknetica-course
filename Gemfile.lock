@@ -490,6 +490,7 @@ DEPENDENCIES
   slim-rails
   spring
   spring-watcher-listen (~> 2.0.0)
+  sprockets
   thinking-sphinx
   turbolinks (~> 5)
   tzinfo-data
