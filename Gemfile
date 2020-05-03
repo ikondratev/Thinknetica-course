@@ -51,6 +51,7 @@ gem 'slim-rails'
 gem 'thinking-sphinx'
 gem 'validate_url'
 gem 'whenever', require: false
+gem  'mini_racer'
 
 gem 'capybara-email'
 gem "letter_opener", group: :development
