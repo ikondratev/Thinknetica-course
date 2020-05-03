@@ -55,7 +55,7 @@ gem  'mini_racer'
 
 gem 'capybara-email'
 gem "letter_opener", group: :development
-gem 'sprockets', '3.7.0'
+gem 'sprockets', '3.7.2'
 gem 'sprockets-rails', '3.1.1'
 
 group :development, :test do
