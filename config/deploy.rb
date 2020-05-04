@@ -8,6 +8,7 @@ set :repo_url, "git@github.com:ikondratev/fps.git"
 # Default deploy_to directory is /var/www/my_app_name
 set :deploy_to, "/home/deployer/fps"
 set :deploy_user, 'deployer'
+set :passenger_restart_with_touch, true
 
 # Default value for :linked_files is []
 append :linked_files, "config/database.yml", "config/master.key"
