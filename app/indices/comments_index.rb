@@ -1,8 +1,7 @@
 ThinkingSphinx::Index.define :comment, with: :active_record do
-  # fields
   indexes body, sortable: true
   indexes user.email
+  indexes commentable_type
 
-  # attributes
-  has user.id, created_at, updated_at
+  has commentable_id
 end
