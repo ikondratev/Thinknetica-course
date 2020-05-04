@@ -5,5 +5,5 @@ ThinkingSphinx::Index.define :question, with: :active_record do
   indexes user.email
 
   # attributes
-  has user.id, created_at, updated_at
+  has user_id, created_at, updated_at
 end
