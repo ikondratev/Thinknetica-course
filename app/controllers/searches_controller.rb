@@ -1,7 +1,8 @@
 class SearchesController < ApplicationController
-  authorize_resource
+  skip_authorization_check
 
-  def show
+  def index
+  	binding.pry
     @results = SearchService.search_by(params[:query], params[:type])
   end
 end
