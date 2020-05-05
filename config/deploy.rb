@@ -9,6 +9,7 @@ set :repo_url, "git@github.com:ikondratev/fps.git"
 set :deploy_to, "/home/deployer/fps"
 set :deploy_user, 'deployer'
 set :passenger_restart_with_touch, true
+set :rbenv_map_bins, %w{rake gem bundle ruby rails sidekiq sidekiqctl}
 
 # Default value for :linked_files is []
 append :linked_files, "config/database.yml", "config/master.key"
