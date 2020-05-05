@@ -8,7 +8,7 @@ require "capistrano/bundler"
 require "capistrano/rails"
 # require "capistrano/passenger"
 require "thinking_sphinx/capistrano"
-require "capistrano/sidekiq"
+# require "capistrano/sidekiq"
 require "whenever/capistrano"
 require "capistrano3/unicorn"
 
