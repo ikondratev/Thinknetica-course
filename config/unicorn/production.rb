@@ -41,10 +41,7 @@ before_fork do |server, worker|
 end
 
 after_fork do |server, worker|
-  # if defined?(ActiveRecord::Base)
-  #   ActiveRecord::Base.establish_connection
-  # end
-  defined?(ActiveRecord::Base) && ActiveRecord::Base.establish_connection
-  child_pid = server.config[:pid].sub('.pid', ".#{worker.nr}.pid")
-  system("echo #{Process.pid} > #{child_pid}")  
+  if defined?(ActiveRecord::Base)
+    ActiveRecord::Base.establish_connection
+  end
 end
