@@ -14,18 +14,20 @@
     p Files:
     ul
       - @question.files.each do |file|
-        li= link_to file.filename.to_s, url_for(file)
-        - if current_user&.is_author_of?(question) 
-          = link_to 'delete file',  attachment_path(file), method: :delete
+        - cache file do
+          li= link_to file.filename.to_s, url_for(file)
+          - if current_user&.is_author_of?(question) 
+            = link_to 'delete file',  attachment_path(file), method: :delete
           
   .links
     p Links:
     ul
       - @question.links.each do |link|
-        li class = "link_#{link.id}"
-          p=  link_to link.name, link.url
-          -if link.gist?
-            p= link.gist_content
+        - cache link do
+          li class = "link_#{link.id}"
+            p=  link_to link.name, link.url
+            -if link.gist?
+              p= link.gist_content
 
   .gift_question_place
       - if question.gift.present? && question.gift.answer.nil?

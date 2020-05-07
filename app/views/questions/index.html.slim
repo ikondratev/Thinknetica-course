@@ -5,10 +5,11 @@ h1 List of questions
 .questions-list
   table
     - if @questions.any?
-      - @questions.each do |question|
-          tr
-            td.title = link_to question.title, question_path(question)
-            td.body = link_to question.body, question_path(question)     
+      - cache personal_collection_cache_key_for(:question, current_user) do
+        - @questions.each do |question|
+            tr
+              td.title = link_to question.title, question_path(question)
+              td.body = link_to question.body, question_path(question)     
     - else
       tr
         td No question yeat          
