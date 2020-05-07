@@ -53,6 +53,7 @@ gem 'validate_url'
 gem 'whenever', require: false
 gem 'mini_racer'
 gem 'unicorn'
+gem 'redis-rails'
 
 gem 'capybara-email'
 gem "letter_opener", group: :development

@@ -1,8 +1,9 @@
--if current_user&.is_not_author_of?(thing)
-  p= link_to 'like', polymorphic_path([:like, thing]), class: "like" , method: :post, remote: true, data: {type: 'json'}
-  p.score= thing.score
-  p= link_to 'dislike', polymorphic_path([:dislike, thing]), class: "dislike", method: :post, remote: true, data: {type: 'json'}
--else 
-  p= "like"
-  p.score= thing.score 
-  p= "dislike"
+- cache ['vote_form', voteable]  
+  -if current_user&.is_not_author_of?(thing)
+    p= link_to 'like', polymorphic_path([:like, thing]), class: "like" , method: :post, remote: true, data: {type: 'json'}
+    p.score= thing.score
+    p= link_to 'dislike', polymorphic_path([:dislike, thing]), class: "dislike", method: :post, remote: true, data: {type: 'json'}
+  -else 
+    p= "like"
+    p.score= thing.score 
+    p= "dislike"

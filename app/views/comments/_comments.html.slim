@@ -1,11 +1,13 @@
 .comment-errors
 .comments
-  = render thing.comments.sorted_by_time
+  - cache comment do
+    = render thing.comments.sorted_by_time
 
 - if current_user  
-  .comments-form
-    = form_with model: [thing, comment], class: 'new-comment' do |f|
-      p  
-        = f.label :body, 'Your comment'
-        = f.text_area :body
-      p= f.submit 'Post comment'
+  - cache ['comment_form', commentable] do
+	.comments-form
+	  = form_with model: [thing, comment], class: 'new-comment' do |f|
+	    p  
+	      = f.label :body, 'Your comment'
+	      = f.text_area :body
+	    p= f.submit 'Post comment'

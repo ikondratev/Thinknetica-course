@@ -4,4 +4,5 @@
   h1.card-header Answers
   .answers.card-body = render question.answers
 
-== render 'answers/answer_form', answer: @answer, queston: question
+- cache personal_collection_cache_key_for(:answer, current_user) do
+  == render 'answers/answer_form', answer: @answer, queston: question
