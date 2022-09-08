@@ -183,7 +183,7 @@ GEM
       i18n (>= 0.7)
       multi_json
       request_store (>= 1.0)
-    hashie (4.1.0)
+    hashie (5.0.0)
     i18n (1.10.0)
       concurrent-ruby (~> 1.0)
     innertube (1.1.0)
@@ -252,7 +252,7 @@ GEM
       faraday (>= 0.9)
       sawyer (~> 0.8.0, >= 0.5.3)
     oj (3.10.6)
-    omniauth (1.9.1)
+    omniauth (1.9.2)
       hashie (>= 3.4.6)
       rack (>= 1.6.2, < 3)
     omniauth-facebook (6.0.0)
@@ -280,7 +280,7 @@ GEM
     puma (4.3.12)
       nio4r (~> 2.0)
     racc (1.6.0)
-    rack (2.2.3.1)
+    rack (2.2.4)
     rack-protection (2.2.0)
       rack
     rack-proxy (0.6.5)
